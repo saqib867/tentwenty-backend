@@ -5,6 +5,7 @@ import { connectDB } from "./services/db";
 import { IUser } from "./models/user.model";
 import router from "./routes";
 import cors from "cors";
+import { rateLimiter } from "./middleware/rate-limiter";
 
 connectDB();
 const app = express();
@@ -13,7 +14,7 @@ app.use(cors());
 const PORT = 3000;
 
 app.use(successHandler); //success handler
-
+app.use(rateLimiter);
 declare global {
   namespace Express {
     export interface Request {
